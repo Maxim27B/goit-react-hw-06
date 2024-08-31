@@ -4,8 +4,11 @@ import ContactList from './components/ContactList/ContactList';
 import SearchBox from './components/SearchBox/SearchBox';
 import css from './App.module.css';
 import { nanoid } from 'nanoid';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from './redux/contactsSlice';
 
 const App = () => {
+  const dispatch = useDispatch();
   const data = localStorage.getItem('contacts');
   const [contacts, setContacts] = useState(
     JSON.parse(data) || [
@@ -15,6 +18,7 @@ const App = () => {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ]
   );
+  const contacts2 = useSelector(state => console.log(state));
   const [filterValue, setFilterValue] = useState('');
 
   useEffect(() => {
@@ -33,6 +37,7 @@ const App = () => {
   const onAddContact = values => {
     const finalContact = { ...values, id: nanoid() };
     setContacts([finalContact, ...contacts]);
+    // dispatch(addContact([finalContact, ...contacts]));
   };
 
   const onDeleteContact = id => {
